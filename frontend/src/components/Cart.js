@@ -246,8 +246,8 @@ const placeOrder=()=>{
     return (
         <>
         <Header/>
-        {console.log(JSON.parse(localStorage.getItem('cart')).length !==0)}
-        {JSON.parse(localStorage.getItem('cart')).length !==0?
+        {/* {console.log((localStorage.getItem('cart')))} */}
+        {localStorage.getItem('cart') && JSON.parse(localStorage.getItem('cart')).length>0  ?
         <Container>
             <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep} className='mt-3 text-light' >

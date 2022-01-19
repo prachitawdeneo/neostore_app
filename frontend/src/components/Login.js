@@ -175,9 +175,10 @@ export default function Login() {
                   <span style={{color:"red"}}>{Errors.password}</span>}
         
            
-        <div className="buttons">
+        <div className="buttons mb-3">
                     <Button onClick={submitLogin} style={{backgroundColor:' #3e2a20', border:'1px solid  #3e2a20'}} type='submit'>Login</Button>
         </div>
+                    <span>Haven't Registered yet?</span><a href="/register" style={{ marginLeft: "10px", color: "black" }}>Register here</a> |  <a href="/forgotPassword" style={{ marginLeft: "10px", color: "black" }}>Forgot Password</a>
         </Form>
         </Container>
             </Paper>

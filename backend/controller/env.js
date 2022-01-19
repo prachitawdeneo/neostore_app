@@ -1,6 +1,7 @@
 const credentials={
-    email:"Your email",
-    password:"Your password"
+    email:"prachivt@gmail.com",
+    // password:"Wonderwoman@1999"
+    password:"fjfuatscettmyvji"
 }
 
 module.exports=credentials;  

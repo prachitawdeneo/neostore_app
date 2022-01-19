@@ -865,7 +865,7 @@ router.post('/sociallogin',(req,res)=>{
                 gender:data.gender,
                 dob:data.dob,
                 phone_no:data.phone_no,
-                password:data.password,
+                // password:data.password,
                 id:data._id,
                 profile_pic:req.body.profile_pic,
                 cart:data.cart,

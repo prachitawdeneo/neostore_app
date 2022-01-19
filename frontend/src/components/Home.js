@@ -23,148 +23,240 @@ export default function Home() {
     useEffect(() => {
         dispatch({type:"cartLen"})
         getAllPro()
-
-        if(localStorage.getItem("_token")){ 
+        
+        if(localStorage.getItem('_token') && !localStorage.getItem('cart')){
           let token = localStorage.getItem('_token');
           let decode = jwt_decode(token);
-          // console.log(decode.cart)
 
           if (decode.isSocialLogin) {
-            // alert("hello")
-              localStorage.removeItem("_token")
-              findSocialUser({ email: decode.email }).then(res => localStorage.setItem("_token", res.data.token))
-              dispatch({ type: "cartLen" })
-              setTimeout(() => {
-                dispatch({ type: "cartLen" })
-                if (localStorage.getItem("cart") && localStorage.getItem("_token")) {
-                  let cartDetails = JSON.parse(localStorage.getItem("cart"));
-                  console.log(cartDetails)
-                  let token = localStorage.getItem('_token');
-                  let decode = jwt_decode(token);
-                  console.log(decode.cart)
-                  let arr = cartDetails.concat(decode.cart)
-                  console.log(arr)
-                  let jsonObject = arr.map(JSON.stringify);
-                  console.log(jsonObject);
-      
-                  let uniqueSet = new Set(jsonObject);
-                  let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
-                  console.log(uniqueArray)
-                  dispatch({ type: "oldCart", payload: uniqueArray.length })
-                  setTimeout(() => {
-                    dispatch({ type: "cartLen" })
-                  }, 100);
-                  dispatch({ type: "cartLen" })
-                  console.log(uniqueArray);
-                  addCart({ id: decode.id, cart: uniqueArray }).then(res => {
-                    localStorage.clear()
-                    localStorage.setItem("_token", res.data)
-                  })
-                  dispatch({ type: "cartLen" })
-                }
-              }, 300);
-      
-            }
-         
-      // addCart({id:decode.id,cart:[]}).then(res=>{
-      //     if(res.data.err===1){
-      //         alert(res.data.message)
-      //     }
-      //     else if(res.data.err===0){
-      //         // alert(res.data.message)
-      //         // localStorage.setItem('cart',JSON.stringify(uniqueArray))
-      //         localStorage.setItem("_token",res.data.token)
-      //     }
-      // })
-  }
-  else  if(localStorage.getItem("cart")){
-        let cart=JSON.parse(localStorage.getItem("cart"));
-        console.log(cart);
-        if(localStorage.getItem("_token")){ 
+                      // alert("hello")
+                        localStorage.removeItem("_token")
+                        findSocialUser({ email: decode.email }).then(res => localStorage.setItem("_token", res.data.token))
+                        dispatch({ type: "cartLen" })
+                        localStorage.setItem('cart',JSON.stringify(decode.cart))
+          }
+          else{
+            dispatch({ type: "cartLen" })
+            localStorage.setItem('cart',JSON.stringify(decode.cart))
+          }
+
+        }
+        else if(localStorage.getItem('_token') && localStorage.getItem('cart')){
+          let token = localStorage.getItem('_token');
+          let decode = jwt_decode(token);
+          if (decode.isSocialLogin) {
+                      // alert("hello")
+                        localStorage.removeItem("_token")
+                        findSocialUser({ email: decode.email }).then(res => localStorage.setItem("_token", res.data.token))
+                        dispatch({ type: "cartLen" })
+                        setTimeout(() => {
+                          dispatch({ type: "cartLen" })
+                         
+                            let cartDetails = JSON.parse(localStorage.getItem("cart"));
+                            console.log(cartDetails)
+                            let token = localStorage.getItem('_token');
+                            let decode = jwt_decode(token);
+                            console.log(decode.cart)
+                            let arr = cartDetails.concat(decode.cart)
+                            console.log(arr)
+                            let jsonObject = arr.map(JSON.stringify);
+                            console.log(jsonObject);
+                
+                            let uniqueSet = new Set(jsonObject);
+                            let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+                            console.log(uniqueArray)
+                            dispatch({ type: "oldCart", payload: uniqueArray.length })
+                            setTimeout(() => {
+                              dispatch({ type: "cartLen" })
+                            }, 100);
+                            dispatch({ type: "cartLen" })
+                            console.log(uniqueArray);
+                            addCart({ id: decode.id, cart: uniqueArray }).then(res => {
+                              localStorage.removeItem('token')
+                              localStorage.setItem("_token", res.data.token)
+                              localStorage.setItem("cart",JSON.stringify(uniqueArray) )
+                            })
+                            dispatch({ type: "cartLen" })
+                          
+                        }, 300);
+                
+          }
+          else{
+            let cartDetails = JSON.parse(localStorage.getItem("cart"));
+            console.log(cartDetails)
             let token = localStorage.getItem('_token');
             let decode = jwt_decode(token);
             console.log(decode.cart)
+            let arr = cartDetails.concat(decode.cart)
+            console.log(arr)
+            let jsonObject = arr.map(JSON.stringify);
+            console.log(jsonObject);
+
+            let uniqueSet = new Set(jsonObject);
+            let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+            console.log(uniqueArray)
+            dispatch({ type: "oldCart", payload: uniqueArray.length })
+            setTimeout(() => {
+              dispatch({ type: "cartLen" })
+            }, 100);
+            dispatch({ type: "cartLen" })
+            console.log(uniqueArray);
+            addCart({ id: decode.id, cart: uniqueArray }).then(res => {
+              localStorage.removeItem('token')
+              localStorage.setItem("_token", res.data.token)
+              localStorage.setItem("cart", JSON.stringify(uniqueArray) )
+              
+            })
+            dispatch({ type: "cartLen" })
+          }
+        }
+  //       if(localStorage.getItem("_token")){ 
+  //         let token = localStorage.getItem('_token');
+  //         let decode = jwt_decode(token);
+  //         // console.log(decode.cart)
+
+  //         if (decode.isSocialLogin) {
+  //           // alert("hello")
+  //             localStorage.removeItem("_token")
+  //             findSocialUser({ email: decode.email }).then(res => localStorage.setItem("_token", res.data.token))
+  //             dispatch({ type: "cartLen" })
+  //             setTimeout(() => {
+  //               dispatch({ type: "cartLen" })
+  //               if (localStorage.getItem("cart") && localStorage.getItem("_token")) {
+  //                 let cartDetails = JSON.parse(localStorage.getItem("cart"));
+  //                 console.log(cartDetails)
+  //                 let token = localStorage.getItem('_token');
+  //                 let decode = jwt_decode(token);
+  //                 console.log(decode.cart)
+  //                 let arr = cartDetails.concat(decode.cart)
+  //                 console.log(arr)
+  //                 let jsonObject = arr.map(JSON.stringify);
+  //                 console.log(jsonObject);
+      
+  //                 let uniqueSet = new Set(jsonObject);
+  //                 let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+  //                 console.log(uniqueArray)
+  //                 dispatch({ type: "oldCart", payload: uniqueArray.length })
+  //                 setTimeout(() => {
+  //                   dispatch({ type: "cartLen" })
+  //                 }, 100);
+  //                 dispatch({ type: "cartLen" })
+  //                 console.log(uniqueArray);
+  //                 addCart({ id: decode.id, cart: uniqueArray }).then(res => {
+  //                   localStorage.clear()
+  //                   localStorage.setItem("_token", res.data)
+  //                 })
+  //                 dispatch({ type: "cartLen" })
+  //               }
+  //             }, 300);
+      
+  //           }
+         
+  //     // addCart({id:decode.id,cart:[]}).then(res=>{
+  //     //     if(res.data.err===1){
+  //     //         alert(res.data.message)
+  //     //     }
+  //     //     else if(res.data.err===0){
+  //     //         // alert(res.data.message)
+  //     //         // localStorage.setItem('cart',JSON.stringify(uniqueArray))
+  //     //         localStorage.setItem("_token",res.data.token)
+  //     //     }
+  //     // })
+  // }
+  //       else  if(localStorage.getItem("cart")){
+  //       let cart=JSON.parse(localStorage.getItem("cart"));
+  //       console.log(cart);
+  //       if(localStorage.getItem("_token")){ 
+  //           let token = localStorage.getItem('_token');
+  //           let decode = jwt_decode(token);
+  //           console.log(decode.cart)
            
           
 
-            let arr=cart.concat(decode.cart)
-            console.log(arr)
-            let jsonObject = arr.map(JSON.stringify);  
-            console.log(jsonObject);
-            let uniqueSet = new Set(jsonObject);
-            let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
-            console.log(uniqueArray.length)
-            dispatch({type:"oldCart",payload:uniqueArray.length})
-            console.log(uniqueArray);
-            // addCart({id:decode.id,cart:uniqueArray}).then(res=>{
-            //     if(res.data.err===1){
-            //         alert(res.data.message)
-            //     }
-            //     else if(res.data.err===0){
-            //         // alert(res.data.message)
-            //         localStorage.removeItem('_token')
-            //         localStorage.setItem('cart',JSON.stringify(uniqueArray))
-            //         localStorage.setItem("_token",res.data.token)
-            //     }
-            // })
-          }
-    }
-    else if(!localStorage.getItem("cart")){
-        // localStorage.setItem('cart',[])
-        if(localStorage.getItem("_token")){ 
-            let token = localStorage.getItem('_token');
-            let decode = jwt_decode(token);
-            // console.log(decode.cart)
+  //           let arr=cart.concat(decode.cart)
+  //           console.log(arr)
+  //           let jsonObject = arr.map(JSON.stringify);  
+  //           console.log(jsonObject);
+  //           let uniqueSet = new Set(jsonObject);
+  //           let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+  //           console.log(uniqueArray.length)
+  //           dispatch({type:"oldCart",payload:uniqueArray.length})
+  //           console.log(uniqueArray);
+  //           addCart({id:decode.id,cart:uniqueArray}).then(res=>{
+  //               if(res.data.err===1){
+  //                   alert(res.data.message)
+  //               }
+  //               else if(res.data.err===0){
+  //                   // alert(res.data.message)
+  //                   localStorage.removeItem('_token')
+  //                   localStorage.setItem('cart',JSON.stringify(uniqueArray))
+  //                   localStorage.setItem("_token",res.data.token)
+  //               }
+  //           })
+  //         }
+  //   }
+  //   else if(!localStorage.getItem("cart")){
+  //       // localStorage.setItem('cart',[])
+  //       if(localStorage.getItem("_token")){ 
+  //           let token = localStorage.getItem('_token');
+  //           let decode = jwt_decode(token);
+  //           // console.log(decode.cart)
 
-            if (decode.isSocialLogin) {
-              // alert("hello")
-                localStorage.removeItem("_token")
-                findSocialUser({ email: decode.email }).then(res => localStorage.setItem("_token", res.data.token))
-                dispatch({ type: "cartLen" })
-                setTimeout(() => {
-                  dispatch({ type: "cartLen" })
-                  if (localStorage.getItem("cart") && localStorage.getItem("_token")) {
-                    let cartDetails = JSON.parse(localStorage.getItem("cart"));
-                    console.log(cartDetails)
-                    let token = localStorage.getItem('_token');
-                    let decode = jwt_decode(token);
-                    console.log(decode.cart)
-                    let arr = cartDetails.concat(decode.cart)
-                    console.log(arr)
-                    let jsonObject = arr.map(JSON.stringify);
-                    console.log(jsonObject);
+  //           if (decode.isSocialLogin) {
+  //             // alert("hello")
+  //               localStorage.removeItem("_token")
+  //               findSocialUser({ email: decode.email }).then(res => localStorage.setItem("_token", res.data.token))
+  //               dispatch({ type: "cartLen" })
+  //               setTimeout(() => {
+  //                 dispatch({ type: "cartLen" })
+  //                 if (localStorage.getItem("cart") && localStorage.getItem("_token")) {
+  //                   let cartDetails = JSON.parse(localStorage.getItem("cart"));
+  //                   console.log(cartDetails)
+  //                   let token = localStorage.getItem('_token');
+  //                   let decode = jwt_decode(token);
+  //                   console.log(decode.cart)
+  //                   let arr = cartDetails.concat(decode.cart)
+  //                   console.log(arr)
+  //                   let jsonObject = arr.map(JSON.stringify);
+  //                   console.log(jsonObject);
         
-                    let uniqueSet = new Set(jsonObject);
-                    let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
-                    console.log(uniqueArray)
-                    dispatch({ type: "oldCart", payload: uniqueArray.length })
-                    setTimeout(() => {
-                      dispatch({ type: "cartLen" })
-                    }, 100);
-                    dispatch({ type: "cartLen" })
-                    console.log(uniqueArray);
-                    addCart({ id: decode.id, cart: uniqueArray }).then(res => {
-                      localStorage.clear()
-                      localStorage.setItem("_token", res.data)
-                    })
-                    dispatch({ type: "cartLen" })
-                  }
-                }, 300);
+  //                   let uniqueSet = new Set(jsonObject);
+  //                   let uniqueArray = Array.from(uniqueSet).map(JSON.parse);
+  //                   console.log(uniqueArray)
+  //                   dispatch({ type: "oldCart", payload: uniqueArray.length })
+  //                   setTimeout(() => {
+  //                     dispatch({ type: "cartLen" })
+  //                   }, 100);
+  //                   dispatch({ type: "cartLen" })
+  //                   console.log(uniqueArray);
+  //                   addCart({ id: decode.id, cart: uniqueArray }).then(res => {
+  //                     localStorage.clear()
+  //                     localStorage.setItem("_token", res.data)
+  //                   })
+  //                   dispatch({ type: "cartLen" })
+  //                 }
+  //                 else if(!localStorage.getItem('cart')){
+  //                   localStorage.setItem('cart',decode.cart)
+  //                 }
+  //               }, 300);
         
-              }
+  //             }
+  //           else{
+  //              localStorage.setItem('cart',decode.cart)
+  //           }
            
-        // addCart({id:decode.id,cart:[]}).then(res=>{
-        //     if(res.data.err===1){
-        //         alert(res.data.message)
-        //     }
-        //     else if(res.data.err===0){
-        //         // alert(res.data.message)
-        //         // localStorage.setItem('cart',JSON.stringify(uniqueArray))
-        //         localStorage.setItem("_token",res.data.token)
-        //     }
-        // })
-    }
-    }
+  //       // addCart({id:decode.id,cart:[]}).then(res=>{
+  //       //     if(res.data.err===1){
+  //       //         alert(res.data.message)
+  //       //     }
+  //       //     else if(res.data.err===0){
+  //       //         // alert(res.data.message)
+  //       //         // localStorage.setItem('cart',JSON.stringify(uniqueArray))
+  //       //         localStorage.setItem("_token",res.data.token)
+  //       //     }
+  //       // })
+  //   }
+  //   }
 
     },[])
 
