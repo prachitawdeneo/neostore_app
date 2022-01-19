@@ -252,7 +252,7 @@ export default function Address() {
                                 <Form className='text-start'>
                                     <Form.Group className="mb-3" >
                                       {/* <Form.Label>Address</Form.Label> */}
-                                      <Form.Control as='textarea' name="address" placeholder='Address' style={{width:"50%",height:"100px"}} onChange={handler} defaultValue={flag===0? disAdd.customer_address[index].address:''} />
+                                      <Form.Control as='textarea' name="address" placeholder='Address' style={{width:"50%",height:"100px"}} onChange={handler}  />
                                       <Form.Text className="text-muted">Max 100 characters!
                                         </Form.Text><br/>
                                         {Errors.address.length>0 &&
@@ -261,7 +261,7 @@ export default function Address() {
                                     <Row className="mb-3">
                                       <Form.Group as={Col} >
                                         <Form.Label>Pin Code</Form.Label>
-                                        <Form.Control name="pin" type='number' defaultValue={customer.dob} onChange={handler}/>
+                                        <Form.Control name="pin" type='number' onChange={handler}/>
                                         {Errors.pin.length>0 &&
                   <span style={{color:"red"}}>{Errors.pin}</span>}
                                       </Form.Group>
@@ -269,20 +269,20 @@ export default function Address() {
                                     <Row className="mb-3">
                                       <Form.Group as={Col} >
                                         <Form.Label>City</Form.Label>
-                                        <Form.Control name="city" type='text' defaultValue={customer.dob} onChange={handler}/>
+                                        <Form.Control name="city" type='text'  onChange={handler}/>
                                         {Errors.city.length>0 &&
                   <span style={{color:"red"}}>{Errors.city}</span>}
                                       </Form.Group>
                                       <Form.Group as={Col} >
                                         <Form.Label>State</Form.Label>
-                                        <Form.Control name="state" type='text' defaultValue={customer.dob} onChange={handler}/>
+                                        <Form.Control name="state" type='text'  onChange={handler}/>
                                         {Errors.state.length>0 &&
                   <span style={{color:"red"}}>{Errors.state}</span>}
                                       </Form.Group>
                                     </Row>
                                     <Form.Group>
                                         <Form.Label>Country</Form.Label>
-                                        <Form.Control name="country" type='text' defaultValue={customer.dob} onChange={handler}/>
+                                        <Form.Control name="country" type='text'  onChange={handler}/>
                                         {Errors.country.length>0 &&
                   <span style={{color:"red"}}>{Errors.country}</span>}
                                     </Form.Group>
