@@ -236,7 +236,10 @@ const placeOrder=()=>{
       handleNext()
       localStorage.removeItem('cart')
       setTimeout(()=>{
-
+        addCart({id:customer.id,cart:[]}).then(res => {
+          localStorage.removeItem('token')
+          localStorage.setItem("_token", res.data.token)
+        })
         navigate('/',{replace:true})
       },3000)
     }
